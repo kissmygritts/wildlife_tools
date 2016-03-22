@@ -1,0 +1,7 @@
+# RStudio
+.Rproj.user
+.Rbuildingnore
+rNDOW.Rproj
+
+# data
+muld10314.csv
