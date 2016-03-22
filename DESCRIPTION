@@ -1,0 +1,15 @@
+Package: rNDOW
+Type: Package
+Title: R Package For NDOW
+Version: 0.1.0
+Imports:
+    data.table,
+    sp
+Authors@R: person("Mitchell", "Gritts", email = "mitchellgritts@gmail.com", role = c("aut", "cre"))
+Description: An R package for data munging, exploratory data analysis, and visualizaiton of
+    common R procedures. Wrapper functions for more complex tasks. Used in conjunction with
+    NDOW's data management systems. Many of the variable/column names are hard coded to match
+    the DMS.
+License: MIT
+LazyData: TRUE
+RoxygenNote: 5.0.1

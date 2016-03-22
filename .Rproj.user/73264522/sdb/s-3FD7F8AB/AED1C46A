@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "#' Convert xy coordinates from one projection to another.\n#'\n#' Takes a dataframe with XY coordinates as input and converts the coordinates to\n#' another projection system. The function defaults to converting longlat to UTM zone 11,\n#' however any properly formated CRS string is acceptable for input.\n#'\n#' @param df A dataframe that contains x, y coordinates.\n#' @param xy A vector of the names for the input x and y coordinates. Default is long_x and lat_y\n#' @param CRSin The CRS string of the input coordinates, defaults to longlat\n#' @param CRSout The CRS string of the output coordinates, defaults to UTM Zone 11\n#' @param outclass The class of the data object to be returned. Options include \\code{'data.frame'},\n#' \\code{'data.table'}, and \\code{'spdf'}. \\code{'spdf'} returns an object of class\n#'  \\code{sp::SpatialPointsDataFrame}.\n#'\n#' @return the original \\code{data.table}, \\code{data.frame} or \\code{SpatialPointsDataFrame}\n#'  with converted XY coordinates added to the object.\n#'\n#' @note\n#'\n#' @author Mitchell Gritts\n#'\n#' @seealso\n#'\n#' @example\n\nxy_conv <- function(df, xy = c('long_x', 'lat_y'), CRSin = '+proj=longlat', CRSout = '+proj=utm +zone=11',\n                    outclass = 'data.table') {\n  if (class(df)[1] == 'data.frame') {\n    df <- as.data.table(df)\n  }\n\n  df <- na.omit(df, cols = xy)\n  conv <- SpatialPoints(cbind('X' = as.numeric(df[[xy[1]]]),\n                              'Y' = as.numeric(df[[xy[2]]])),\n                        proj4string = CRS(CRSin))\n  conv <- spTransform(conv, CRS(CRSout))\n  df <- cbind(df, as.data.frame(conv))\n\n  if (outclass == 'data.frame') {\n    df <- as.data.frame(df)\n  } else if (outclass == 'spdf') {\n    df <- SpatialPointsDataFrame(conv, df, proj4string = conv@proj4string@projargs)\n  }\n  return(df)\n}\n",
+    "created" : 1458680783174.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2817866757",
+    "id" : "AED1C46A",
+    "lastKnownWriteTime" : 1458688951,
+    "last_content_update" : 1458688951395,
+    "path" : "C:/Users/mgritts/Dropbox/R/rNDOW/R/xy_conv.R",
+    "project_path" : "R/xy_conv.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
