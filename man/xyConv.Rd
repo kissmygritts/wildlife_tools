@@ -18,7 +18,7 @@ xyConv(df, xy = c("long_x", "lat_y"), CRSin = "+proj=longlat",
 
 \item{outclass}{The class of the data object to be returned. Options include \code{'data.frame'},
 \code{'data.table'}, and \code{'spdf'}. \code{'spdf'} returns an object of class
- \code{sp::SpatialPointsDataFrame}.}
+\code{sp::SpatialPointsDataFrame}.}
 }
 \value{
 the original \code{data.table}, \code{data.frame} or \code{SpatialPointsDataFrame}
@@ -28,6 +28,9 @@ the original \code{data.table}, \code{data.frame} or \code{SpatialPointsDataFram
 Takes a dataframe with XY coordinates as input and converts the coordinates to
 another projection system. The function defaults to converting longlat to UTM zone 11,
 however any properly formated CRS string is acceptable for input.
+}
+\examples{
+df <- xyConv(dat, xy = c('geox', 'geoy'))
 }
 \author{
 Mitchell Gritts

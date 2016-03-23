@@ -19,6 +19,15 @@
 #' \item{phi, theta}{absolute and turning angle (respectively)}
 #' \item{vp}{persistence velocity}
 #' \item{vt}{turning velocity}
+#'
+#' @author Mitchell Gritts
+#'
+#' @importFrom fasttime fastPOSIXct
+#'
+#' @export
+#'
+#' @examples
+#' df <- moveParams(df$X, df$Y, df$timestamp, dat = df, isPOSIXct = TRUE)
 
 moveParams <- function(x, y, timestamp, dat = NULL, isPOSIXct = TRUE) {
   if (isPOSIXct == FALSE) {

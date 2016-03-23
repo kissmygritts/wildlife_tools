@@ -20,6 +20,10 @@ as the red circle.
 Plot an animal trajectory
 }
 \examples{
-plot_traj(df$X, df$Y)
+plotTraj(df$X, df$Y)
+
+}
+\author{
+Mitchell Gritts
 }
 

@@ -10,13 +10,20 @@
 #' @param CRSout The CRS string of the output coordinates, defaults to UTM Zone 11
 #' @param outclass The class of the data object to be returned. Options include \code{'data.frame'},
 #' \code{'data.table'}, and \code{'spdf'}. \code{'spdf'} returns an object of class
-#'  \code{sp::SpatialPointsDataFrame}.
+#' \code{sp::SpatialPointsDataFrame}.
 #'
 #' @return the original \code{data.table}, \code{data.frame} or \code{SpatialPointsDataFrame}
 #'  with converted XY coordinates added to the object.
 #'
 #' @author Mitchell Gritts
-
+#'
+#' @import data.table
+#' @import sp
+#'
+#' @export
+#'
+#' @examples
+#' df <- xyConv(dat, xy = c('geox', 'geoy'))
 
 xyConv <- function(df, xy = c('long_x', 'lat_y'), CRSin = '+proj=longlat', CRSout = '+proj=utm +zone=11',
                     outclass = 'data.table') {
@@ -25,6 +32,7 @@ xyConv <- function(df, xy = c('long_x', 'lat_y'), CRSin = '+proj=longlat', CRSou
   }
 
   df <- na.omit(df, cols = xy)
+  df <- df[order(timestamp)]
   conv <- SpatialPoints(cbind('X' = as.numeric(df[[xy[1]]]),
                               'Y' = as.numeric(df[[xy[2]]])),
                         proj4string = CRS(CRSin))

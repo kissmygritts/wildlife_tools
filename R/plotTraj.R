@@ -7,8 +7,12 @@
 #' line. The start of the trajectory is shown as the green circle, the end
 #' as the red circle.
 #'
+#' @author Mitchell Gritts
+#'
 #' @examples
-#' plot_traj(df$X, df$Y)
+#' plotTraj(df$X, df$Y)
+#'
+#' @export
 
 plotTraj <- function(x, y) {
   plot(x, y, asp = 1, type = 'o', pch = 19, cex = .5, col = rgb(0, 0, 0, .2))

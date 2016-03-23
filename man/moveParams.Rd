@@ -33,4 +33,10 @@ The function will estimate common movement parameters from the given xy coordina
 timestamp data. The data can be returnded by itself as a data.table or added to an
 existing data.table.
 }
+\examples{
+df <- moveParams(df$X, df$Y, df$timestamp, dat = df, isPOSIXct = TRUE)
+}
+\author{
+Mitchell Gritts
+}
 
