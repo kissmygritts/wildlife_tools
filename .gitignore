@@ -1,6 +1,6 @@
 # RStudio, R
 .Rproj.user
-.Rbuildingnore
+.Rbuildignore
 rNDOW.Rproj
 .Rhistory
 
