@@ -15,15 +15,10 @@
 #' @return the original \code{data.table}, \code{data.frame} or \code{SpatialPointsDataFrame}
 #'  with converted XY coordinates added to the object.
 #'
-#' @note
-#'
 #' @author Mitchell Gritts
-#'
-#' @seealso
-#'
-#' @example
 
-xy_conv <- function(df, xy = c('long_x', 'lat_y'), CRSin = '+proj=longlat', CRSout = '+proj=utm +zone=11',
+
+xyConv <- function(df, xy = c('long_x', 'lat_y'), CRSin = '+proj=longlat', CRSout = '+proj=utm +zone=11',
                     outclass = 'data.table') {
   if (class(df)[1] == 'data.frame') {
     df <- as.data.table(df)

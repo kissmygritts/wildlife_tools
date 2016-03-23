@@ -1,7 +1,11 @@
-# RStudio
+# RStudio, R
 .Rproj.user
 .Rbuildingnore
 rNDOW.Rproj
+.Rhistory
 
 # data
 muld10314.csv
+
+# mac
+.DS_Store
