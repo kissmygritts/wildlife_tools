@@ -4,19 +4,20 @@
 \alias{moveParams}
 \title{Estimate movement parameters from timestamped xy data}
 \usage{
-moveParams(x, y, timestamp, dat = NULL, isPOSIXct = TRUE)
+moveParams(x, y, timestamp, dat = NULL, format = NULL)
 }
 \arguments{
-\item{x}{the x component of the xy data}
+\item{x}{The x component of the xy data}
 
-\item{y}{the y component of the xy data}
+\item{y}{The y component of the xy data}
 
-\item{timestamp}{the timestamp of the xy data}
+\item{timestamp}{The timestamp of the xy data}
 
-\item{dat}{additional data for the returned data to be added to (optional)}
+\item{dat}{Additional data for the returned data to be added to (optional)}
 
-\item{isPOSIXct}{whether or not the timestamp data is of class \code{POSIXct}
-the default value is \code{TRUE}}
+\item{format}{Format of the date time string to be passed to the \code{as.POSIXct}.
+The default is \code{NULL} assuming that timestamps will be in the "standard unambiguous format",
+i.e. YYYY-MM-DD HH:MM:SS. If the timestamp is already of class \code{POSIXct}, this isn't required.}
 }
 \value{
 a \code{data.table} with the following columns:
@@ -34,7 +35,7 @@ timestamp data. The data can be returnded by itself as a data.table or added to 
 existing data.table.
 }
 \examples{
-df <- moveParams(df$X, df$Y, df$timestamp, dat = df, isPOSIXct = TRUE)
+df <- moveParams(df$X, df$Y, df$timestamp, dat = df, format = '\%Y-\%m-\%d \%H:\%M:\%S')
 }
 \author{
 Mitchell Gritts

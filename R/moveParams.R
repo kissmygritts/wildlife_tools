@@ -4,12 +4,13 @@
 #' timestamp data. The data can be returnded by itself as a data.table or added to an
 #' existing data.table.
 #'
-#' @param x the x component of the xy data
-#' @param y the y component of the xy data
-#' @param timestamp the timestamp of the xy data
-#' @param dat additional data for the returned data to be added to (optional)
-#' @param isPOSIXct whether or not the timestamp data is of class \code{POSIXct}
-#' the default value is \code{TRUE}
+#' @param x The x component of the xy data
+#' @param y The y component of the xy data
+#' @param timestamp The timestamp of the xy data
+#' @param dat Additional data for the returned data to be added to (optional)
+#' @param format Format of the date time string to be passed to the \code{as.POSIXct}.
+#' The default is \code{NULL} assuming that timestamps will be in the "standard unambiguous format",
+#' i.e. YYYY-MM-DD HH:MM:SS. If the timestamp is already of class \code{POSIXct}, this isn't required.
 #'
 #' @return a \code{data.table} with the following columns:
 #' \item{dist}{the distance between xy locations (meters)}
@@ -22,16 +23,18 @@
 #'
 #' @author Mitchell Gritts
 #'
-#' @importFrom fasttime fastPOSIXct
-#'
 #' @export
 #'
 #' @examples
-#' df <- moveParams(df$X, df$Y, df$timestamp, dat = df, isPOSIXct = TRUE)
+#' df <- moveParams(df$X, df$Y, df$timestamp, dat = df, format = '%Y-%m-%d %H:%M:%S')
 
-moveParams <- function(x, y, timestamp, dat = NULL, isPOSIXct = TRUE) {
-  if (isPOSIXct == FALSE) {
-    timestamp <- fasttime::fastPOSIXct(timestamp)
+moveParams <- function(x, y, timestamp, dat = NULL, format = NULL) {
+  if (class(timestamp) != 'POSIXct') {
+    if (is.null(format)) {
+      timestamp <- as.POSIXct(timestamp)
+    } else {
+      timestamp <- as.POSIXct(timestamp, format = format)
+    }
   }
   dist <- c(0, sqrt((x[-1] - x[-length(x)])**2 +
                       (y[-1] - y[-length(y)])**2))
