@@ -4,15 +4,17 @@
 \alias{plotTraj}
 \title{Plot an animal trajectory}
 \usage{
-plotTraj(x, y)
+plotTraj(x, y, id)
 }
 \arguments{
 \item{x}{The x geographic coordinate to plot}
 
 \item{y}{the y geographic coordinate to plot}
+
+\item{id}{The column of the individual IDs.}
 }
 \value{
-A plot of the the animal trajectory. Each point is connected by a
+A plot of the animal trajectory. Each point is connected by a
 line. The start of the trajectory is shown as the green circle, the end
 as the red circle.
 }
@@ -20,7 +22,7 @@ as the red circle.
 Plot an animal trajectory
 }
 \examples{
-plotTraj(df$X, df$Y)
+plotTraj(df$X, df$Y, df$ndowid)
 
 }
 \author{

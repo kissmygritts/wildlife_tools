@@ -17,7 +17,6 @@
 #'
 #' @author Mitchell Gritts
 #'
-#' @import data.table
 #' @import sp
 #'
 #' @export
@@ -25,24 +24,21 @@
 #' @examples
 #' df <- xyConv(dat, xy = c('geox', 'geoy'))
 
-xyConv <- function(df, xy = c('long_x', 'lat_y'), CRSin = '+proj=longlat', CRSout = '+proj=utm +zone=11',
-                    outclass = 'data.table') {
-  if (class(df)[1] == 'data.frame') {
-    df <- as.data.table(df)
-  }
-
-  df <- na.omit(df, cols = xy)
-  df <- df[order(timestamp)]
-  conv <- SpatialPoints(cbind('X' = as.numeric(df[[xy[1]]]),
-                              'Y' = as.numeric(df[[xy[2]]])),
+xyConv <- function(df, xy = c('long_x', 'lat_y'), CRSin = '+proj=longlat',
+                   CRSout = '+proj=utm +zone=11', outclass = 'data.frame') {
+  df <- dat[order(dat$ndowid, dat$timestamp), ]
+  df <- df[complete.cases(df[, xy]), ]
+  conv <- SpatialPoints(cbind('x' = as.numeric(df[, xy[1]]),
+                              'y' = as.numeric(df[, xy[2]])),
                         proj4string = CRS(CRSin))
   conv <- spTransform(conv, CRS(CRSout))
-  df <- cbind(df, as.data.frame(conv))
+  conv <- data.frame(conv)
+  df <- cbind(df, conv)
 
-  if (outclass == 'data.frame') {
-    df <- as.data.frame(df)
-  } else if (outclass == 'spdf') {
+  if (outclass == 'spdf') {
     df <- SpatialPointsDataFrame(conv, df, proj4string = conv@proj4string@projargs)
   }
   return(df)
 }
+
+

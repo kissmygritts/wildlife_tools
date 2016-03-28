@@ -5,7 +5,7 @@
 \title{Convert xy coordinates from one projection to another.}
 \usage{
 xyConv(df, xy = c("long_x", "lat_y"), CRSin = "+proj=longlat",
-  CRSout = "+proj=utm +zone=11", outclass = "data.table")
+  CRSout = "+proj=utm +zone=11", outclass = "data.frame")
 }
 \arguments{
 \item{df}{A dataframe that contains x, y coordinates.}
