@@ -26,7 +26,7 @@
 
 xyConv <- function(df, xy = c('long_x', 'lat_y'), CRSin = '+proj=longlat',
                    CRSout = '+proj=utm +zone=11', outclass = 'data.frame') {
-  df <- dat[order(dat$ndowid, dat$timestamp), ]
+
   df <- df[complete.cases(df[, xy]), ]
   conv <- SpatialPoints(cbind('x' = as.numeric(df[, xy[1]]),
                               'y' = as.numeric(df[, xy[2]])),

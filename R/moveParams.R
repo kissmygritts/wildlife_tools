@@ -23,19 +23,29 @@
 #'
 #' @author Mitchell Gritts
 #'
+#' @importFrom fasttime fastPOSIXct
+#'
 #' @export
 #'
 #' @examples
 #' df <- moveParams(df$X, df$Y, df$timestamp, dat = df, format = '%Y-%m-%d %H:%M:%S')
 
-moveParams <- function(x, y, timestamp, dat = NULL, format = NULL) {
+moveParams <- function(df, xyti = c('x', 'y', 'timestamp', 'ndowid'),
+                       format = NULL) {
+  df <- df[order(df[, xyti[4]], df[, xyti[3]]), ]
+  x <- df[, xyti[1]]
+  y <- df[, xyti[2]]
+  timestamp <- df[, xyti[3]]
+
   if (class(timestamp) != 'POSIXct') {
     if (is.null(format)) {
-      timestamp <- as.POSIXct(timestamp)
+      timestamp <- fasttime::fastPOSIXct(timestamp)
     } else {
       timestamp <- as.POSIXct(timestamp, format = format)
     }
   }
+  df$timestamp <- timestamp
+
   dist <- c(0, sqrt((x[-1] - x[-length(x)])**2 +
                       (y[-1] - y[-length(y)])**2))
   nsd <- (x - x[1])**2 + (y - y[1])**2
@@ -56,6 +66,6 @@ moveParams <- function(x, y, timestamp, dat = NULL, format = NULL) {
     return(params)
   } else {
     dat$timestamp <- timestamp
-    return(cbind(dat, params))
+    return(cbind(df, params))
   }
 }

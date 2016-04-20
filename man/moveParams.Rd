@@ -4,9 +4,13 @@
 \alias{moveParams}
 \title{Estimate movement parameters from timestamped xy data}
 \usage{
-moveParams(x, y, timestamp, dat = NULL, format = NULL)
+moveParams(df, xyti = c("x", "y", "timestamp", "ndowid"), format = NULL)
 }
 \arguments{
+\item{format}{Format of the date time string to be passed to the \code{as.POSIXct}.
+The default is \code{NULL} assuming that timestamps will be in the "standard unambiguous format",
+i.e. YYYY-MM-DD HH:MM:SS. If the timestamp is already of class \code{POSIXct}, this isn't required.}
+
 \item{x}{The x component of the xy data}
 
 \item{y}{The y component of the xy data}
@@ -14,10 +18,6 @@ moveParams(x, y, timestamp, dat = NULL, format = NULL)
 \item{timestamp}{The timestamp of the xy data}
 
 \item{dat}{Additional data for the returned data to be added to (optional)}
-
-\item{format}{Format of the date time string to be passed to the \code{as.POSIXct}.
-The default is \code{NULL} assuming that timestamps will be in the "standard unambiguous format",
-i.e. YYYY-MM-DD HH:MM:SS. If the timestamp is already of class \code{POSIXct}, this isn't required.}
 }
 \value{
 a \code{data.table} with the following columns:

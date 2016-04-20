@@ -4,7 +4,7 @@
 \alias{plotTraj}
 \title{Plot an animal trajectory}
 \usage{
-plotTraj(x, y, id)
+plotTraj(x, y, id = NULL)
 }
 \arguments{
 \item{x}{The x geographic coordinate to plot}
