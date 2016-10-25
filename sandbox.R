@@ -61,3 +61,17 @@ ggTraj <- function(df, xyi = c('x', 'y', 'ndowid')) {
 
 trj <- ggTraj(dat_move, c('x', 'y', 'ndowid'))
 trj + facet_wrap(~ndowid)
+
+
+library(gganimate)
+library(dplyr)
+library(magrittr)
+
+g <- dat_move %>%
+  filter(ndowid == 10320) %>%
+  ggplot(aes(x = x, y = y)) +
+  geom_point(color = 'grey', shape = 19) +
+  geom_point(aes(frame = timestamp), shape = 19, color = 'red', size = 2.5) +
+  theme_void()
+g
+gg_animate(g, filename = 'move.html')

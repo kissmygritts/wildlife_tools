@@ -12,8 +12,9 @@
 #' \code{'data.table'}, and \code{'spdf'}. \code{'spdf'} returns an object of class
 #' \code{sp::SpatialPointsDataFrame}.
 #'
-#' @return the original \code{data.table}, \code{data.frame} or \code{SpatialPointsDataFrame}
-#'  with converted XY coordinates added to the object.
+#' @return A \code{data.frame} of the input data with the converted XY coordinates. 
+#'  the \code{data.frame} removes rows with \code{Null} or \code{NA} values in 
+#'  the XY columns.
 #'
 #' @author Mitchell Gritts
 #'
@@ -25,20 +26,18 @@
 #' df <- xyConv(dat, xy = c('geox', 'geoy'))
 
 xyConv <- function(df, xy = c('long_x', 'lat_y'), CRSin = '+proj=longlat',
-                   CRSout = '+proj=utm +zone=11', outclass = 'data.frame') {
-
+                   CRSout = '+proj=utm +zone=11') {
   df <- df[complete.cases(df[, xy]), ]
-  conv <- SpatialPoints(cbind('x' = as.numeric(df[, xy[1]]),
-                              'y' = as.numeric(df[, xy[2]])),
+  coord <- data.frame(df[, xy])
+  colnames(coord) <- c('x', 'y') 
+  coord[, 1] <- as.numeric(coord[, 1])
+  coord[, 2] <- as.numeric(coord[, 2])
+  conv <- SpatialPoints(coordinates(coord),
                         proj4string = CRS(CRSin))
   conv <- spTransform(conv, CRS(CRSout))
   conv <- data.frame(conv)
+  colnames(conv) <- c('x', 'y')
   df <- cbind(df, conv)
-
-  if (outclass == 'spdf') {
-    df <- SpatialPointsDataFrame(conv, df, proj4string = conv@proj4string@projargs)
-  }
   return(df)
 }
-
 
